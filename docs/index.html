@@ -17,17 +17,17 @@
         box-sizing: border-box;
       }
       :root {
-        /* Darker, more bluish gradient from background version */
-        --g1: #0b0f1a;
-        --g2: #10172b;
-        --g3: #182035;
+        /* Darker, more bluish navy gradient */
+        --g1: #0a0e1a;
+        --g2: #0e1628;
+        --g3: #131d30;
         --accent: #40e0d0;
+        --text-color: #f1e9dc; /* Cream/ivory color instead of pure white */
       }
       body {
         font-family: 'Fraunces', serif;
-        /* Updated gradient for deeper/darker blues from background version */
         background: linear-gradient(135deg, var(--g1), var(--g2), var(--g3));
-        color: #fff;
+        color: var(--text-color);
         overflow-x: hidden;
         min-height: 100vh;
       }
@@ -67,7 +67,7 @@
           #2979ff,
           #651fff,
           #d500f9,
-          #2979ff,
+          #ff9100,
           #00e5ff
         );
         background-size: 300% 100%;
@@ -100,19 +100,18 @@
       }
       /* Text glow effect from glow version */
       .s {
-        color: #e0f7fa; /* Light cyan */
+        color: var(--text-color); /* Updated from cyan to cream */
         font-style: normal;
-        text-shadow: 0 0 8px rgba(224, 247, 250, 0.5);
+        text-shadow: 0 0 8px rgba(241, 233, 220, 0.3); /* Matching shadow to text color */
         animation: wk 6s infinite alternate ease-in-out;
       }
       .v {
-        color: #b0e0e6; /* Powder blue */
+        color: var(--text-color); /* Updated from blue to cream */
         font-style: italic;
-        text-shadow: 0 0 8px rgba(176, 224, 230, 0.5);
+        text-shadow: 0 0 8px rgba(241, 233, 220, 0.3); /* Matching shadow to text color */
         animation: va 8s infinite alternate ease-in-out;
       }
       .co {
-        color: #81d4fa; /* Light blue cyan */
         margin-right: 0.1em;
         font-variation-settings: 'wght' 700, 'opsz' 48, 'SOFT' 0;
         background: linear-gradient(
@@ -121,7 +120,7 @@
           #2979ff,
           #651fff,
           #d500f9,
-          #2979ff,
+          #ff9100,
           #00e5ff
         );
         background-size: 300% 100%;
@@ -136,6 +135,7 @@
         font-stretch: 100%;
         font-variation-settings: 'wdth' 100, 'YTFI' 670, 'YTAS' 670, 'YTDE' -120,
           'YTLC' 480, 'YTUC' 670;
+        color: var(--text-color);
       }
       .d {
         font-size: clamp(1.3rem, 2.2vw, 1.5rem);
@@ -164,11 +164,11 @@
           'YTLC' 540, 'YTUC' 670, 'XTRA' 603;
         letter-spacing: 0.2em;
         display: inline-block;
-        color: #fff;
+        color: var(--text-color);
         border: none;
         padding: 18px 60px;
         border-radius: 50px;
-        font-size: clamp(1.2rem, 2.3vw, 1.8rem);
+        font-size: clamp(1.4rem, 2.6vw, 2rem);
         text-transform: uppercase;
         cursor: pointer;
         position: relative;
@@ -358,7 +358,7 @@
           this.pulseAmplitude2 = this.handleLength2 * 0.1; // 10% length variation
           
           this.color = this.getColor();
-          this.handleColor = `rgba(110,165,255,0.3)`;
+          this.handleColor = `rgba(100,155,255,0.25)`;
           
           // Simplified path system
           this.isPathNode = Math.random() < 0.4;
@@ -369,11 +369,11 @@
 
         getColor() {
           const colors = [
-            'rgba(98,120,234,0.7)', 
-            'rgba(64,224,208,0.6)', 
-            'rgba(150,180,255,0.6)',
-            'rgba(60,105,190,0.7)',
-            'rgba(128,190,235,0.65)' // Additional color
+            'rgba(98,120,234,0.5)', 
+            'rgba(64,224,208,0.4)', 
+            'rgba(140,170,235,0.5)',
+            'rgba(60,105,190,0.5)',
+            'rgba(128,190,235,0.5)'
           ];
           return colors[Math.floor(Math.random() * colors.length)];
         }
@@ -737,7 +737,7 @@
             Math.floor(Math.random() * 4)
           ];
           p.style.borderRadius = '50%';
-          p.style.boxShadow = '0 0 6px rgba(255,255,255,0.5)';
+          p.style.boxShadow = '0 0 6px rgba(255,255,255,0.4)';
           p.style.left = `${e.clientX}px`;
           p.style.top = `${e.clientY}px`;
           p.style.zIndex = '10';
