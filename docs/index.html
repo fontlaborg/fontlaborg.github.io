@@ -1,2 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FONTLAB 8</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #00f5ff;
+      --secondary: #ff00d0;
+      --accent: #7d4cff;
+      --dark: #050a15;
+      --light: #f0f8ff;
+      --green: #00ffaa;
+    }
+    body {
+      font-family: 'Fraunces', serif;
+      background: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5vh 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      font-variation-settings: 'wght' 900, 'opsz' 144, 'WONK' 1;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8vh;
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+      text-transform: uppercase;
+    }
+    .title-container {
+      text-align: center;
+      margin-bottom: 8vh;
+      perspective: 1500px;
+    }
+    .title-line {
+      font-size: clamp(4.5rem, 12vw, 8.5rem);
+      line-height: 1.3;
+      opacity: 0;
+      transform: translateY(40px) rotateX(-10deg);
+      animation: fadeUp 1s forwards;
+    }
+    .title-line:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+    .word {
+      display: inline-block;
+      position: relative;
+      margin: 0 10px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .word.smart, .word.variable {
+      color: var(--light);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+    .word.color {
+      background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent), var(--green));
+      background-size: 400% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: gradientShift 6s infinite alternate ease-in-out;
+    }
+    .word.fonts {
+      color: var(--light);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+    .word:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(0, 245, 255, 0.6);
+    }
+    .description {
+      font-size: clamp(1.3rem, 2.2vw, 1.5rem);
+      font-variation-settings: 'wght' 500, 'opsz' 50;
+      max-width: 800px;
+      text-align: center;
+      margin-bottom: 8vh;
+      opacity: 0;
+      animation: fadeUp 1s forwards 0.6s;
+    }
+    .cta {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--light);
+      border: none;
+      padding: 18px 50px;
+      border-radius: 50px;
+      font-variation-settings: 'wght' 700, 'opsz' 80;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 1s forwards 0.9s;
+      text-decoration: none;
+      transition: all 0.4s ease;
+    }
+    .cta:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 245, 255, 0.3);
+      font-variation-settings: 'wght' 900, 'opsz' 100;
+    }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+    .cta:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+      }
+    }
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+    @media (max-width: 768px) {
+      .content {
+        padding: 4vh 15px;
+      }
+      .logo {
+        margin-bottom: 6vh;
+      }
+      .title-container {
+        margin-bottom: 6vh;
+      }
+      .description {
+        margin-bottom: 6vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <div class="content">
+    <h3 class="logo">FontLab 8</h3>
+    <div class="title-container">
+      <h1 class="title-line">
+        <span class="word smart">Smart.</span>
+        <span class="word variable">Variable.</span>
+      </h1>
+      <h1 class="title-line">
+        <span class="word color">Color.</span>
+        <span class="word fonts">Fonts.</span>
+      </h1>
+    </div>
+    <p class="description">Craft interstellar variable fonts with infinite dimensions. Design, refine, and launch professional typography for any universe.</p>
+    <a href="https://www.fontlab.com/font-editor/fontlab/" class="cta">Learn More</a>
+  </div>
 
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FONTLAB 8</title><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}:root{--p:#00eaff;--s:#ff00e1;--d:#0a0e17;--l:#e6f0ff;--g:#00ffcc}body{font-family:'Fraunces',serif;background:radial-gradient(circle at center,#1a2333 0%,var(--d) 70%);color:var(--l);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;padding:20px}.c{width:100%;max-width:1200px;position:relative;overflow:hidden;border-radius:30px;background:rgba(20,30,50,.95);box-shadow:0 0 50px rgba(0,234,255,.2)}.b{position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:linear-gradient(45deg,rgba(0,234,255,.1),rgba(255,0,225,.1))}.bs{position:absolute;border-radius:50%;opacity:.5;filter:blur(150px);mix-blend-mode:screen}.s1{top:-30%;left:-20%;width:80%;height:80%;background:radial-gradient(circle,var(--p),transparent);animation:cp 12s infinite ease-in-out}.s2{bottom:-25%;right:-15%;width:90%;height:90%;background:radial-gradient(circle,var(--s),transparent);animation:cp 16s infinite reverse ease-in-out}@keyframes cp{0%,100%{transform:translate(0,0) scale(1);opacity:.5}50%{transform:translate(60px,60px) scale(1.4);opacity:.8}}.n{padding:80px 50px;text-align:center;position:relative;z-index:1}.t{font-size:clamp(1.2rem,3vw,1.5rem);font-variation-settings:'wght' 600,'opsz' 80;text-transform:uppercase;letter-spacing:4px;background:linear-gradient(90deg,var(--p),var(--s));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 15px rgba(0,234,255,.5);animation:fu 1s forwards .2s}.i{margin:60px 0;perspective:1500px;position:relative}.it{font-size:clamp(3.5rem,10vw,6.5rem);line-height:1.2;font-variation-settings:'wght' 400,'opsz' 120,'SOFT' 60,'WONK' 0;transition:all .4s cubic-bezier(.34,1.56,.64,1);opacity:0;transform:translateY(40px) rotateX(-10deg)}.it:nth-of-type(1){animation:fu 1s forwards .4s}.it:nth-of-type(2){animation:fu 1s forwards .6s}.w{display:inline-block;padding:0 15px;transition:all .4s ease-out;position:relative}.w.smart,.w.variable,.w.fonts{color:var(--l);text-shadow:0 0 10px rgba(255,255,255,.3)}.w.color{background:linear-gradient(90deg,#ff00e1,#00eaff,#7c4dff,#ffeb3b);background-size:400% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:cg 6s infinite alternate ease-in-out;text-shadow:0 0 20px rgba(0,234,255,.5)}@keyframes cg{0%{background-position:0% 50%}100%{background-position:100% 50%}}.d{font-size:clamp(1.2rem,2vw,1.4rem);font-variation-settings:'wght' 500,'opsz' 50;max-width:800px;margin:0 auto 50px;text-shadow:0 0 10px rgba(0,234,255,.2);animation:fu 1s forwards .9s}@keyframes fu{to{opacity:1;transform:translateY(0) rotateX(0)}}.cta{display:inline-block;background:linear-gradient(135deg,var(--p),var(--s));color:var(--l);border:none;padding:18px 50px;border-radius:50px;font-variation-settings:'wght' 700,'opsz' 80;font-size:1.3rem;text-transform:uppercase;letter-spacing:2px;cursor:pointer;position:relative;overflow:hidden;animation:fu 1s forwards 1s;z-index:1;text-decoration:none}.cta::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);transition:all .6s ease;z-index:-1}.cta:hover::before{width:300px;height:300px}.cta:hover{transform:translateY(-5px) scale(1.08);box-shadow:0 15px 30px rgba(0,234,255,.4);font-variation-settings:'wght' 900,'opsz' 100;text-shadow:0 0 15px var(--g)}.fl{position:absolute;top:40px;left:50%;transform:translateX(-50%);font-size:2rem;font-variation-settings:'wght' 900,'opsz' 144,'WONK' 1;background:linear-gradient(45deg,var(--p),var(--s));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 20px rgba(0,234,255,.5);animation:fi 1s forwards .1s;white-space:nowrap;text-transform:uppercase}@keyframes fi{to{opacity:1}}@media (max-width:768px){.n{padding:60px 25px}.fl{top:25px;font-size:1.6rem}}.p{position:absolute;width:100%;height:100%;pointer-events:none;z-index:0}</style></head><body><div class="c"><div class="b"><div class="bs s1"></div><div class="bs s2"></div><div class="p" id="particles"></div></div><a href="#" class="fl">FONTLAB 8</a><div class="n"><p class="t">Create. Develop. Complete. Deliver.<br>Design & Edit Fonts.</p><div class="i"><h1 class="it"><span class="w smart">smart,</span><span class="w variable">variable,</span></h1><h1 class="it"><span class="w color">color,</span><span class="w fonts">fonts</span></h1></div><p class="d">Craft interstellar variable fonts with infinite dimensions. Design, refine, and launch professional typography for any universe.</p><a href="https://www.fontlab.com/font-editor/fontlab/" class="cta">LEARN MORE</a></div></div><script>const w=document.querySelectorAll(".w"),ds={smart:{wght:400,opsz:120,soft:60,wonk:0},variable:{wght:400,opsz:120,soft:60,wonk:0},color:{wght:400,opsz:120,soft:60,wonk:0},fonts:{wght:400,opsz:120,soft:60,wonk:0}},al={wght:{min:100,max:900},opsz:{min:9,max:144},soft:{min:0,max:100},wonk:{min:0,max:1}};let id=!1,cx=0,cy=0;document.addEventListener("mousedown",e=>{id=!0,cx=e.clientX,cy=e.clientY}),document.addEventListener("touchstart",e=>{const t=e.touches[0];id=!0,cx=t.clientX,cy=t.clientY},{passive:!0}),document.addEventListener("mousemove",e=>{if(!id)return;const dx=e.clientX-cx,dy=e.clientY-cy;cx=e.clientX,cy=e.clientY;const we=document.elementsFromPoint(cx,cy).filter(el=>el.classList.contains("w"));if(we.length>0){const wd=we[0],wt=Array.from(wd.classList).find(c=>["smart","variable","color","fonts"].includes(c));if(wt){const s={...ds[wt]};s.wght=Math.max(al.wght.min,Math.min(al.wght.max,s.wght+dx*3)),s.opsz=Math.max(al.opsz.min,Math.min(al.opsz.max,s.opsz-dy*2)),s.soft+=dx*.5,s.wonk=Math.max(al.wonk.min,Math.min(al.wonk.max,s.wonk+dy*.01)),wd.style.fontVariationSettings=`'wght' ${Math.round(s.wght)},'opsz' ${Math.round(s.opsz)},'SOFT' ${Math.round(s.soft)},'WONK' ${s.wonk}`,ds[wt]=s;const g=Math.abs(dx)+Math.abs(dy);wd.style.textShadow=`0 0 ${g/10}px rgba(0,234,255,.7),0 0 ${g/5}px rgba(255,0,225,.5)`,wd.style.transform=`perspective(1500px) rotateX(${dy/3}deg) rotateY(${-dx/6}deg) scale(1.1)`}}}),document.addEventListener("touchmove",e=>{if(id){const t=e.touches[0];cx=t.clientX,cy=t.clientY,e.preventDefault()}},{passive:!1}),document.addEventListener("mouseup",()=>{id=!1,w.forEach(wd=>{const wt=Array.from(wd.classList).find(c=>["smart","variable","color","fonts"].includes(c));if(wt){const s=ds[wt];wd.style.transition="all .6s cubic-bezier(.34,1.56,.64,1)",wd.style.fontVariationSettings=`'wght' ${s.wght},'opsz' ${s.opsz},'SOFT' ${s.soft},'WONK' ${s.wonk}`,wd.style.transform="none",wd.style.textShadow="0 0 10px rgba(255,255,255,.3)"}})}),document.addEventListener("touchend",()=>id=!1),w.forEach(wd=>{wd.addEventListener("mouseover",()=>{if(!id){const wt=Array.from(wd.classList).find(c=>["smart","variable","color","fonts"].includes(c));wt==="smart"?wd.style.fontVariationSettings="'wght' 800,'opsz' 144,'SOFT' 20,'WONK' 1":wt==="variable"?wd.style.fontVariationSettings="'wght' 200,'opsz' 40,'SOFT' 90,'WONK' .8":wt==="fonts"&&(wd.style.fontVariationSettings="'wght' 900,'opsz' 144,'SOFT' 30,'WONK' .5"),wd.style.transform="scale(1.1) translateZ(20px)",wd.style.textShadow="0 0 20px rgba(0,234,255,.7)"}}),wd.addEventListener("mouseout",()=>{if(!id){const wt=Array.from(wd.classList).find(c=>["smart","variable","color","fonts"].includes(c));if(wt){const s=ds[wt];wd.style.fontVariationSettings=`'wght' ${s.wght},'opsz' ${s.opsz},'SOFT' ${s.soft},'WONK' ${s.wonk}`,wd.style.transform="none",wd.style.textShadow="0 0 10px rgba(255,255,255,.3)"}}})});const pc=document.getElementById("particles");function cp(){const p=document.createElement("div");p.style.position="absolute",p.style.width="2px",p.style.height="2px",p.style.background="rgba(0,234,255,.7)",p.style.borderRadius="50%",p.style.boxShadow="0 0 8px rgba(0,234,255,.5)";const x=Math.random()*window.innerWidth,y=Math.random()*window.innerHeight;p.style.left=`${x}px`,p.style.top=`${y}px`;const a=p.animate([{transform:"translate(0,0) scale(1)",opacity:.7},{transform:`translate(${Math.random()*100-50}px,${Math.random()*100-50}px) scale(.5)`,opacity:0}],{duration:Math.random()*2e3+2e3,easing:"ease-in-out"});a.onfinish=()=>p.remove(),pc.appendChild(p)}setInterval(cp,200);const cw=document.querySelector(".w.color");function ac(){const s=ds.color,t=Date.now()/800,w=400+Math.sin(t)*400,o=120+Math.cos(t*.8)*24,f=60+Math.sin(t*1.2)*40,k=(Math.sin(t*.4)+1)/2;cw.style.fontVariationSettings=`'wght' ${Math.round(w)},'opsz' ${Math.round(o)},'SOFT' ${Math.round(f)},'WONK' ${k}`,requestAnimationFrame(ac)}ac();</script></body></html>
+  <script>
+    // Canvas setup
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas dimensions
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    // Font nodes that will form connections
+    class Node {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.color = this.getRandomColor();
+      }
+      
+      getRandomColor() {
+        const colors = [
+          'rgba(0, 245, 255, 0.7)',  // Cyan
+          'rgba(255, 0, 208, 0.7)',  // Magenta
+          'rgba(125, 76, 255, 0.7)',  // Purple
+          'rgba(0, 255, 170, 0.7)'   // Green
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+      
+      update() {
+        // Move nodes
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        // Bounce at edges
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+    
+    // Create nodes
+    const nodeCount = Math.min(Math.floor(window.innerWidth * window.innerHeight / 15000), 100);
+    const nodes = [];
+    
+    for (let i = 0; i < nodeCount; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      nodes.push(new Node(x, y));
+    }
+    
+    // Mouse interaction
+    let mouse = {
+      x: undefined,
+      y: undefined,
+      radius: 150
+    };
+    
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+    
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    });
+    
+    window.addEventListener('mouseout', () => {
+      mouse.x = undefined;
+      mouse.y = undefined;
+    });
+    
+    // Typography animation
+    const words = document.querySelectorAll('.word');
+    const fontVariations = {
+      smart: { wght: 700, opsz: 120, soft: 30, wonk: 0.5 },
+      variable: { wght: 300, opsz: 60, soft: 80, wonk: 0.8 },
+      color: { wght: 600, opsz: 100, soft: 50, wonk: 0.3 },
+      fonts: { wght: 900, opsz: 144, soft: 20, wonk: 0.7 }
+    };
+    
+    // Animate words on hover
+    words.forEach(word => {
+      word.addEventListener('mouseover', () => {
+        const classList = Array.from(word.classList);
+        let type;
+        
+        if (classList.includes('smart')) type = 'smart';
+        else if (classList.includes('variable')) type = 'variable';
+        else if (classList.includes('color')) type = 'color';
+        else if (classList.includes('fonts')) type = 'fonts';
+        
+        if (type) {
+          const variation = fontVariations[type];
+          word.style.fontVariationSettings = `'wght' ${variation.wght}, 'opsz' ${variation.opsz}, 'SOFT' ${variation.soft}, 'WONK' ${variation.wonk}`;
+        }
+      });
+      
+      word.addEventListener('mouseout', () => {
+        word.style.fontVariationSettings = '';
+      });
+    });
+    
+    // Animate color word continuously
+    const colorWord = document.querySelector('.word.color');
+    function animateColorWord() {
+      const time = Date.now() / 800;
+      const wght = 400 + Math.sin(time) * 300;
+      const opsz = 100 + Math.cos(time * 0.8) * 40;
+      const soft = 50 + Math.sin(time * 1.2) * 40;
+      const wonk = (Math.sin(time * 0.4) + 1) / 2;
+      
+      colorWord.style.fontVariationSettings = `'wght' ${Math.round(wght)}, 'opsz' ${Math.round(opsz)}, 'SOFT' ${Math.round(soft)}, 'WONK' ${wonk}`;
+      requestAnimationFrame(animateColorWord);
+    }
+    
+    animateColorWord();
+    
+    // Main animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw nodes
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].update();
+        nodes[i].draw();
+        
+        // Connect nodes with lines if close enough
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const maxDistance = canvas.width * 0.15;
+          
+          if (distance < maxDistance) {
+            // Set line opacity based on distance
+            const opacity = 1 - (distance / maxDistance);
+            
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+        
+        // Mouse interaction - push nodes away from cursor
+        if (mouse.x !== undefined && mouse.y !== undefined) {
+          const dx = nodes[i].x - mouse.x;
+          const dy = nodes[i].y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const directionX = dx / distance || 0;
+            const directionY = dy / distance || 0;
+            
+            nodes[i].x += directionX * force * 2;
+            nodes[i].y += directionY * force * 2;
+          }
+        }
+      }
+      
+      // Text shadow effect
+      if (mouse.x !== undefined && mouse.y !== undefined) {
+        words.forEach(word => {
+          const rect = word.getBoundingClientRect();
+          const wordCenterX = rect.left + rect.width / 2;
+          const wordCenterY = rect.top + rect.height / 2;
+          
+          const dx = mouse.x - wordCenterX;
+          const dy = mouse.y - wordCenterY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 300) {
+            const intensity = 1 - (distance / 300);
+            word.style.textShadow = `0 0 ${15 * intensity}px rgba(0, 245, 255, 0.7)`;
+            word.style.transform = `scale(${1 + 0.05 * intensity})`;
+          } else {
+            word.style.textShadow = '';
+            word.style.transform = '';
+          }
+        });
+      }
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Add occasional glitch effect to highlight "variable" concept
+    function glitchEffect() {
+      const wordToGlitch = words[Math.floor(Math.random() * words.length)];
+      const originalSettings = wordToGlitch.style.fontVariationSettings;
+      
+      // Rapid variation changes
+      let glitchCount = 0;
+      const maxGlitches = 3 + Math.floor(Math.random() * 3);
+      const glitchInterval = setInterval(() => {
+        const wght = 100 + Math.floor(Math.random() * 800);
+        const opsz = 9 + Math.floor(Math.random() * 135);
+        const soft = Math.floor(Math.random() * 100);
+        const wonk = Math.random();
+        
+        wordToGlitch.style.fontVariationSettings = `'wght' ${wght}, 'opsz' ${opsz}, 'SOFT' ${soft}, 'WONK' ${wonk}`;
+        
+        glitchCount++;
+        if (glitchCount >= maxGlitches) {
+          clearInterval(glitchInterval);
+          wordToGlitch.style.fontVariationSettings = originalSettings;
+        }
+      }, 100);
+      
+      // Schedule next glitch
+      setTimeout(glitchEffect, 5000 + Math.random() * 10000);
+    }
+    
+    // Start glitch effect after 3 seconds
+    setTimeout(glitchEffect, 3000);
+  </script>
+</body>
+</html>
