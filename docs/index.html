@@ -4,12 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FONTLAB 8</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Roboto+Flex:opsz,wdth,wght,XTRA,YTDE,YTFI,YTLC,YTUC@8..144,25..151,100..1000,323..603,-120,670,416..570,670&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,200;1,300;1,400;1,500;1,600;1,700&family=Literata:opsz,wght@7..72,200..900&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Roboto+Flex:opsz,wdth,wght,XTRA,YTDE,YTFI,YTLC,YTUC@8..144,25..151,100..1000,323..603,-120,670,416..570,670&display=swap" rel="stylesheet">
+    
+    
     <style>
       * {
         margin: 0;
@@ -138,11 +137,12 @@
         color: var(--text-color);
       }
       .d {
+        font-family: 'Literata', serif;
         font-size: clamp(1.1rem, 2vw, 1.3rem);
         font-variation-settings: 'wght' 380, 'opsz' 9;
         max-width: 640px;
         width: 100%;
-        margin-bottom: 4vh;
+        margin-bottom: 5vh;
         margin-left: 4vw;
         margin-right: 4vw;
         opacity: 0;
@@ -154,7 +154,13 @@
       }
       
       .d-col {
-        line-height: 1.5;
+        line-height: 1.3;
+      }
+      .d em {
+        font-family: 'IBM Plex Serif', serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: 0.02em;
       }
       .btn {
         font-family: 'Roboto Flex', sans-serif;
@@ -187,6 +193,10 @@
           #00e5ff
         );
         background-size: 300% 100%;
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
       }
       .btn:hover {
         transform: translateY(-5px) scale(1.05);
@@ -278,10 +288,10 @@
       </div>
       <div class="d">
         <div class="d-col">
-          Craft interstellar variable fonts with infinite dimensions. Transform typographic visions into celestial artistry that transcends the ordinary.
+          Craft interstellar <em>variable fonts</em> with infinite dimensions. Transform <em>typographic visions</em> into celestial artistry that transcends the ordinary.
         </div>
         <div class="d-col">
-          Breathe life into characters that dance across digital galaxies, where each glyph becomes a constellation of possibilities.
+          Breathe life into <em>characters</em> that dance across digital galaxies, where each <em>glyph</em> becomes a constellation of possibilities.
         </div>
       </div>
       <a href="https://www.fontlab.com/font-editor/fontlab/" class="btn"
