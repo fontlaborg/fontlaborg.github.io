@@ -1,526 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FONTLAB 8</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    :root {
-      --primary: #00f5ff;
-      --secondary: #ff00d0;
-      --accent: #7d4cff;
-      --vibrant1: #ff9500;
-      --vibrant2: #00d0ff;
-      --vibrant3: #ff3ee7;
-      --light: #ffffff;
-    }
-    body {
-      font-family: 'Fraunces', serif;
-      background: linear-gradient(135deg, #2b3aff, #832bff, #ff2bd4);
-      color: var(--light);
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-    .content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 5vh 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .logo {
-      font-size: clamp(2rem, 3vw, 2.5rem);
-      font-variation-settings: 'wght' 900, 'opsz' 144, 'WONK' 1;
-      background: linear-gradient(45deg, var(--vibrant2), var(--vibrant3));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 8vh;
-      text-shadow: 0 0 20px rgba(0, 208, 255, 0.4);
-      text-transform: uppercase;
-    }
-    .title-container {
-      text-align: center;
-      margin-bottom: 8vh;
-      perspective: 1500px;
-    }
-    .title-line {
-      font-size: clamp(4.5rem, 12vw, 8.5rem);
-      line-height: 1.2;
-      opacity: 0;
-      transform: translateY(40px) rotateX(-10deg);
-      animation: fadeUp 1s forwards;
-      white-space: nowrap;
-    }
-    .title-line:nth-child(2) {
-      animation-delay: 0.3s;
-    }
-    .word {
-      display: inline-block;
-      position: relative;
-      margin: 0 -0.03em;
-      transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .word.smart, .word.variable {
-      color: var(--light);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-    .word.color {
-      background: linear-gradient(90deg, #ff9500, #00d0ff, #d400ff, #ff5e3a);
-      background-size: 300% 100%;
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: gradientShift 8s infinite alternate ease-in-out;
-    }
-    .word.fonts {
-      color: var(--light);
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-    .description {
-      font-size: clamp(1.3rem, 2.2vw, 1.5rem);
-      font-variation-settings: 'wght' 500, 'opsz' 50;
-      max-width: 800px;
-      text-align: center;
-      margin-bottom: 8vh;
-      opacity: 0;
-      animation: fadeUp 1s forwards 0.6s;
-    }
-    .cta {
-      display: inline-block;
-      background: linear-gradient(135deg, #ff9500, #ff3ee7);
-      color: var(--light);
-      border: none;
-      padding: 18px 50px;
-      border-radius: 50px;
-      font-variation-settings: 'wght' 700, 'opsz' 80;
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeUp 1s forwards 0.9s;
-      text-decoration: none;
-      transition: all 0.4s ease;
-    }
-    .cta:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(255, 62, 231, 0.3);
-      font-variation-settings: 'wght' 900, 'opsz' 100;
-    }
-    .cta::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.6s ease;
-      z-index: -1;
-    }
-    .cta:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0) rotateX(0);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FONTLAB 8</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Roboto+Flex:opsz,wdth,wght,XTRA,YTDE,YTFI,YTLC,YTUC@8..144,25..151,100..1000,323..603,-120,670,416..570,670&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-    }
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
+      :root {
+        --g1: #7a3d17;
+        --g2: #8a1a40;
+        --g3: #251551;
+        --accent: #40e0d0;
       }
-      100% {
-        background-position: 100% 50%;
+      body {
+        font-family: 'Fraunces', serif;
+        background: linear-gradient(135deg, var(--g1), var(--g2), var(--g3));
+        color: #fff;
+        overflow-x: hidden;
+        min-height: 100vh;
       }
-    }
-    @media (max-width: 768px) {
-      .content {
-        padding: 4vh 15px;
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
       }
-      .logo {
-        margin-bottom: 6vh;
+      .c {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 5vh 8vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
-      .title-container {
-        margin-bottom: 6vh;
+      .l {
+        font-family: 'Roboto Flex', sans-serif;
+        font-weight: 600;
+        font-stretch: 151%;
+        font-variation-settings: 'wdth' 151, 'YTFI' 670, 'YTAS' 670, 'YTDE' -120,
+          'YTLC' 540, 'YTUC' 670, 'XTRA' 603;
+        letter-spacing: 0.2em;
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        margin-bottom: 8vh;
+        text-transform: uppercase;
+        background: linear-gradient(
+          90deg,
+          #00e5ff,
+          #2979ff,
+          #651fff,
+          #d500f9,
+          #2979ff,
+          #00e5ff
+        );
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: cg 8s infinite alternate ease-in-out;
       }
-      .description {
-        margin-bottom: 6vh;
+      .tc {
+        text-align: center;
+        margin-bottom: 8vh;
+        perspective: 1500px;
       }
-    }
-  </style>
-</head>
-<body>
-  <canvas id="bgCanvas"></canvas>
-  <div class="content">
-    <h3 class="logo">FontLab 8</h3>
-    <div class="title-container">
-      <h1 class="title-line">
-        <span class="word smart">Smart.</span><span class="word variable">Variable.</span>
-      </h1>
-      <h1 class="title-line">
-        <span class="word color">Color.</span><span class="word fonts">Fonts.</span>
-      </h1>
+      .tl {
+        font-size: clamp(4.5rem, 12vw, 8.5rem);
+        line-height: 1.1;
+        opacity: 0;
+        transform: translateY(40px) rotateX(-10deg);
+        animation: fu 1s forwards;
+        white-space: nowrap;
+      }
+      .tl:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .w {
+        display: inline-block;
+        position: relative;
+        font-optical-sizing: none;
+        transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .s {
+        color: #fff;
+        font-style: normal;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        animation: wk 6s infinite alternate ease-in-out;
+      }
+      .v {
+        color: #fff;
+        font-style: italic;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        animation: va 8s infinite alternate ease-in-out;
+      }
+      .co {
+        color: #fff;
+        margin-right: 0.1em;
+        font-variation-settings: 'wght' 800, 'opsz' 9, 'SOFT' 0;
+        background: linear-gradient(
+          90deg,
+          #00e5ff,
+          #2979ff,
+          #651fff,
+          #d500f9,
+          #2979ff,
+          #00e5ff
+        );
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: cg 8s infinite alternate ease-in-out;
+      }
+      .f {
+        font-family: 'Roboto Flex', sans-serif;
+        font-weight: 300;
+        font-stretch: 100%;
+        font-variation-settings: 'wdth' 100, 'YTFI' 670, 'YTAS' 670, 'YTDE' -120,
+          'YTLC' 480, 'YTUC' 670;
+      }
+      .d {
+        font-size: clamp(1.3rem, 2.2vw, 1.5rem);
+        font-variation-settings: 'wght' 500, 'opsz' 50;
+        max-width: 800px;
+        width: 100%;
+        margin-bottom: 8vh;
+        margin-left: 4vw;
+        margin-right: 4vw;
+        opacity: 0;
+        animation: fu 1s forwards 0.6s;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        text-align: left;
+      }
+      
+      .d-col {
+        line-height: 1.6;
+      }
+      .btn {
+        font-family: 'Roboto Flex', sans-serif;
+        font-weight: 600;
+        font-stretch: 151%;
+        font-variation-settings: 'wdth' 151, 'YTFI' 670, 'YTAS' 670, 'YTDE' -120,
+          'YTLC' 540, 'YTUC' 670, 'XTRA' 603;
+        letter-spacing: 0.2em;
+        display: inline-block;
+        color: #fff;
+        border: none;
+        padding: 18px 50px;
+        border-radius: 50px;
+        font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+        text-transform: uppercase;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        animation: fu 1s forwards 0.9s, cg 8s infinite alternate ease-in-out;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: linear-gradient(
+          90deg,
+          #00e5ff,
+          #2979ff,
+          #651fff,
+          #d500f9,
+          #2979ff,
+          #00e5ff
+        );
+        background-size: 300% 100%;
+      }
+      .btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(252, 58, 106, 0.3);
+      }
+      @keyframes fu {
+        to {
+          opacity: 1;
+          transform: translateY(0) rotateX(0);
+        }
+      }
+      @keyframes cg {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      @keyframes wk {
+        0% {
+          font-variation-settings: 'wght' 600, 'opsz' 120, 'SOFT' 60, 'WONK' 0;
+        }
+        50% {
+          font-variation-settings: 'wght' 600, 'opsz' 120, 'SOFT' 60, 'WONK' 1;
+        }
+        100% {
+          font-variation-settings: 'wght' 600, 'opsz' 120, 'SOFT' 60, 'WONK' 0;
+        }
+      }
+      @keyframes va {
+        0% {
+          font-variation-settings: 'wght' 200, 'opsz' 40, 'SOFT' 90, 'WONK' 0.2;
+        }
+        33% {
+          font-variation-settings: 'wght' 600, 'opsz' 100, 'SOFT' 40, 'WONK' 0.8;
+        }
+        66% {
+          font-variation-settings: 'wght' 300, 'opsz' 144, 'SOFT' 10, 'WONK' 0.5;
+        }
+        100% {
+          font-variation-settings: 'wght' 700, 'opsz' 70, 'SOFT' 70, 'WONK' 0.1;
+        }
+      }
+      @media (max-width: 768px) {
+        .c {
+          padding: 4vh 8vw;
+        }
+        .l {
+          margin-bottom: 6vh;
+        }
+        .tc {
+          margin-bottom: 6vh;
+        }
+        .d {
+          margin-bottom: 6vh;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          margin-left: 3vw;
+          margin-right: 3vw;
+        }
+        .d-col {
+          line-height: 1.3;
+          margin-bottom: 0.8rem;
+        }
+        .tl {
+          white-space: normal;
+          line-height: 0.9;
+        }
+        .w {
+          display: block;
+          margin-bottom: 0.1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="cv"></canvas>
+    <div class="c">
+      <h3 class="l">FontLab 8</h3>
+      <div class="tc">
+        <h1 class="tl">
+          <span class="w s">Smart.</span><span class="w v">Variable.</span>
+        </h1>
+        <h1 class="tl">
+          <span class="w co">Color.</span> <span class="w f">Fonts.</span>
+        </h1>
+      </div>
+      <div class="d">
+        <div class="d-col">
+          Craft interstellar variable fonts with infinite dimensions. Transform typographic visions into celestial artistry that transcends the ordinary.
+        </div>
+        <div class="d-col">
+          Breathe life into characters that dance across digital galaxies, where each glyph becomes a constellation of possibilities.
+        </div>
+      </div>
+      <a href="https://www.fontlab.com/font-editor/fontlab/" class="btn"
+        >Learn More</a
+      >
     </div>
-    <p class="description">Craft interstellar variable fonts with infinite dimensions. Design, refine, and launch professional typography for any universe.</p>
-    <a href="https://www.fontlab.com/font-editor/fontlab/" class="cta">Learn More</a>
-  </div>
 
-  <script>
-    // Canvas setup
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Set canvas dimensions
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    
-    // Background gradient animation
-    function animateBackground() {
-      const time = Date.now() * 0.0002;
-      document.body.style.background = `linear-gradient(${time * 30}deg, #2b3aff, #832bff, #ff2bd4, #ff9500)`;
-      requestAnimationFrame(animateBackground);
-    }
-    animateBackground();
-    
-    // Font nodes that will form connections
-    class Node {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = this.getRandomColor();
+    <script>
+      const cv = document.getElementById('cv');
+      const cx = cv.getContext('2d');
+
+      function rs() {
+        cv.width = window.innerWidth;
+        cv.height = window.innerHeight;
       }
-      
-      getRandomColor() {
-        const colors = [
-          'rgba(255, 149, 0, 0.7)',   // Orange
-          'rgba(0, 208, 255, 0.7)',    // Cyan
-          'rgba(255, 62, 231, 0.7)',   // Pink
-          'rgba(255, 255, 255, 0.7)'   // White
-        ];
-        return colors[Math.floor(Math.random() * colors.length)];
+
+      window.addEventListener('resize', rs);
+      rs();
+
+      class N {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.size = Math.random() * 2.5 + 1;
+          this.sx = Math.random() * 0.5 - 0.25;
+          this.sy = Math.random() * 0.5 - 0.25;
+          this.color = this.grc();
+        }
+
+        grc() {
+          const c = [
+            'rgba(98,70,234,0.7)', // Purple
+            'rgba(64,224,208,0.7)', // Turquoise
+            'rgba(255,126,179,0.7)', // Pink
+            'rgba(168,85,31,0.7)', // Orange
+          ];
+          return c[Math.floor(Math.random() * c.length)];
+        }
+
+        update() {
+          this.x += this.sx;
+          this.y += this.sy;
+          if (this.x < 0 || this.x > cv.width) this.sx *= -1;
+          if (this.y < 0 || this.y > cv.height) this.sy *= -1;
+        }
+
+        draw() {
+          cx.beginPath();
+          cx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          cx.fillStyle = this.color;
+          cx.fill();
+        }
       }
-      
-      update() {
-        // Move nodes
-        this.x += this.speedX;
-        this.y += this.speedY;
-        
-        // Bounce at edges
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+      const nc = Math.min(
+        Math.floor((window.innerWidth * window.innerHeight) / 18000),
+        90
+      );
+      const ns = [];
+
+      for (let i = 0; i < nc; i++) {
+        const x = Math.random() * cv.width;
+        const y = Math.random() * cv.height;
+        ns.push(new N(x, y));
       }
-      
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-      }
-    }
-    
-    // Create nodes
-    const nodeCount = Math.min(Math.floor(window.innerWidth * window.innerHeight / 15000), 100);
-    const nodes = [];
-    
-    for (let i = 0; i < nodeCount; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      nodes.push(new Node(x, y));
-    }
-    
-    // Mouse interaction
-    let mouse = {
-      x: undefined,
-      y: undefined,
-      radius: 150
-    };
-    
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.x;
-      mouse.y = e.y;
-    });
-    
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
-      }
-    });
-    
-    window.addEventListener('mouseout', () => {
-      mouse.x = undefined;
-      mouse.y = undefined;
-    });
-    
-    // Typography animation with smooth transitions
-    const words = document.querySelectorAll('.word');
-    
-    // Initial variations
-    const variations = {
-      smart: { wght: 600, opsz: 120, soft: 30, wonk: 0.5 },
-      variable: { wght: 300, opsz: 60, soft: 80, wonk: 0.8 },
-      color: { wght: 600, opsz: 100, soft: 50, wonk: 0.3 },
-      fonts: { wght: 800, opsz: 144, soft: 20, wonk: 0.7 }
-    };
-    
-    // Target variations for hover
-    const targetVariations = {
-      smart: { wght: 800, opsz: 144, soft: 20, wonk: 1 },
-      variable: { wght: 200, opsz: 40, soft: 90, wonk: 0.8 },
-      color: { wght: 600, opsz: 100, soft: 50, wonk: 0.3 },
-      fonts: { wght: 900, opsz: 144, soft: 30, wonk: 0.5 }
-    };
-    
-    // Apply initial variations
-    words.forEach(word => {
-      const classList = Array.from(word.classList);
-      let type;
-      
-      if (classList.includes('smart')) type = 'smart';
-      else if (classList.includes('variable')) type = 'variable';
-      else if (classList.includes('color')) type = 'color';
-      else if (classList.includes('fonts')) type = 'fonts';
-      
-      if (type) {
-        const variation = variations[type];
-        word.style.fontVariationSettings = `'wght' ${variation.wght}, 'opsz' ${variation.opsz}, 'SOFT' ${variation.soft}, 'WONK' ${variation.wonk}`;
-      }
-    });
-    
-    // Smooth animation helpers
-    function lerp(start, end, t) {
-      return start * (1 - t) + end * t;
-    }
-    
-    function animateVariation(word, startVar, targetVar, progress) {
-      const wght = lerp(startVar.wght, targetVar.wght, progress);
-      const opsz = lerp(startVar.opsz, targetVar.opsz, progress);
-      const soft = lerp(startVar.soft, targetVar.soft, progress);
-      const wonk = lerp(startVar.wonk, targetVar.wonk, progress);
-      
-      word.style.fontVariationSettings = `'wght' ${Math.round(wght)}, 'opsz' ${Math.round(opsz)}, 'SOFT' ${Math.round(soft)}, 'WONK' ${wonk.toFixed(2)}`;
-    }
-    
-    // Track animation state for each word
-    const animationState = {
-      smart: { animating: false, startTime: 0, duration: 800, hovering: false },
-      variable: { animating: false, startTime: 0, duration: 800, hovering: false },
-      color: { animating: false, startTime: 0, duration: 800, hovering: false },
-      fonts: { animating: false, startTime: 0, duration: 800, hovering: false }
-    };
-    
-    words.forEach(word => {
-      const classList = Array.from(word.classList);
-      let type;
-      
-      if (classList.includes('smart')) type = 'smart';
-      else if (classList.includes('variable')) type = 'variable';
-      else if (classList.includes('color')) type = 'color';
-      else if (classList.includes('fonts')) type = 'fonts';
-      
-      if (type) {
-        word.addEventListener('mouseenter', () => {
-          animationState[type].hovering = true;
-          animationState[type].startTime = Date.now();
-          animationState[type].animating = true;
-        });
-        
-        word.addEventListener('mouseleave', () => {
-          animationState[type].hovering = false;
-          animationState[type].startTime = Date.now();
-          animationState[type].animating = true;
-        });
-      }
-    });
-    
-    // Update animations
-    function updateAnimations() {
-      Object.keys(animationState).forEach(type => {
-        const state = animationState[type];
-        if (state.animating) {
-          const word = document.querySelector(`.word.${type}`);
-          const elapsed = Date.now() - state.startTime;
-          let progress = elapsed / state.duration;
-          
-          if (progress >= 1) {
-            progress = 1;
-            state.animating = false;
-          }
-          
-          // Easing function
-          progress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
-          
-          if (state.hovering) {
-            animateVariation(word, variations[type], targetVariations[type], progress);
-          } else {
-            animateVariation(word, targetVariations[type], variations[type], progress);
-          }
+
+      let m = { x: undefined, y: undefined, r: 150 };
+
+      window.addEventListener('mousemove', (e) => {
+        m.x = e.x;
+        m.y = e.y;
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          m.x = e.touches[0].clientX;
+          m.y = e.touches[0].clientY;
         }
       });
-      
-      requestAnimationFrame(updateAnimations);
-    }
-    
-    updateAnimations();
-    
-    // Animate color word continuously but smoothly
-    const colorWord = document.querySelector('.word.color');
-    let lastColorTime = Date.now();
-    const colorVariationBase = variations.color;
-    
-    function animateColorWord() {
-      const time = Date.now() / 1000;
-      
-      // Only animate if not being hovered
-      if (!animationState.color.hovering && !animationState.color.animating) {
-        const wght = colorVariationBase.wght + Math.sin(time * 0.5) * 200;
-        const opsz = colorVariationBase.opsz + Math.cos(time * 0.4) * 30;
-        const soft = colorVariationBase.soft + Math.sin(time * 0.7) * 30;
-        const wonk = colorVariationBase.wonk + (Math.sin(time * 0.3) * 0.3);
-        
-        colorWord.style.fontVariationSettings = `'wght' ${Math.round(wght)}, 'opsz' ${Math.round(opsz)}, 'SOFT' ${Math.round(soft)}, 'WONK' ${wonk.toFixed(2)}`;
-      }
-      
-      requestAnimationFrame(animateColorWord);
-    }
-    
-    animateColorWord();
-    
-    // Main animation loop
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw nodes
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].update();
-        nodes[i].draw();
-        
-        // Connect nodes with lines if close enough
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          const maxDistance = canvas.width * 0.15;
-          
-          if (distance < maxDistance) {
-            // Set line opacity based on distance
-            const opacity = 1 - (distance / maxDistance);
-            
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`;
-            ctx.lineWidth = 1;
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
+
+      window.addEventListener('mouseout', () => {
+        m.x = undefined;
+        m.y = undefined;
+      });
+
+      function a() {
+        cx.clearRect(0, 0, cv.width, cv.height);
+
+        for (let i = 0; i < ns.length; i++) {
+          ns[i].update();
+          ns[i].draw();
+
+          for (let j = i + 1; j < ns.length; j++) {
+            const dx = ns[i].x - ns[j].x;
+            const dy = ns[i].y - ns[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            const md = cv.width * 0.15;
+
+            if (d < md) {
+              const o = 1 - d / md;
+
+              cx.beginPath();
+              cx.strokeStyle = `rgba(255,255,255,${o * 0.2})`;
+              cx.lineWidth = 1;
+              cx.moveTo(ns[i].x, ns[i].y);
+              cx.lineTo(ns[j].x, ns[j].y);
+              cx.stroke();
+            }
+          }
+
+          if (m.x !== undefined && m.y !== undefined) {
+            const dx = ns[i].x - m.x;
+            const dy = ns[i].y - m.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+
+            if (d < m.r) {
+              const f = (m.r - d) / m.r;
+              const dirx = dx / d || 0;
+              const diry = dy / d || 0;
+
+              ns[i].x += dirx * f * 2;
+              ns[i].y += diry * f * 2;
+            }
           }
         }
-        
-        // Mouse interaction - push nodes away from cursor
-        if (mouse.x !== undefined && mouse.y !== undefined) {
-          const dx = nodes[i].x - mouse.x;
-          const dy = nodes[i].y - mouse.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < mouse.radius) {
-            const force = (mouse.radius - distance) / mouse.radius;
-            const directionX = dx / distance || 0;
-            const directionY = dy / distance || 0;
-            
-            nodes[i].x += directionX * force * 2;
-            nodes[i].y += directionY * force * 2;
-          }
+
+        requestAnimationFrame(a);
+      }
+
+      a();
+
+      document.addEventListener('click', (e) => {
+        for (let i = 0; i < 15; i++) {
+          const p = document.createElement('div');
+          p.style.position = 'absolute';
+          p.style.width = '4px';
+          p.style.height = '4px';
+          p.style.background = ['#40e0d0', '#fc3a6a', '#6246ea', '#a8551f'][
+            Math.floor(Math.random() * 4)
+          ];
+          p.style.borderRadius = '50%';
+          p.style.boxShadow = '0 0 10px rgba(255,255,255,0.7)';
+          p.style.left = `${e.clientX}px`;
+          p.style.top = `${e.clientY}px`;
+          p.style.zIndex = '10';
+          document.body.appendChild(p);
+
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 5 + 2;
+          const dx = Math.cos(angle) * speed;
+          const dy = Math.sin(angle) * speed;
+
+          p.animate(
+            [
+              { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+              {
+                transform: `translate(${dx * 20}px, ${dy * 20}px) scale(0)`,
+                opacity: 0,
+              },
+            ],
+            {
+              duration: Math.random() * 1000 + 500,
+              easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)',
+            }
+          ).onfinish = () => p.remove();
         }
-      }
-      
-      // Text glow effect on proximity
-      if (mouse.x !== undefined && mouse.y !== undefined) {
-        words.forEach(word => {
-          const rect = word.getBoundingClientRect();
-          const wordCenterX = rect.left + rect.width / 2;
-          const wordCenterY = rect.top + rect.height / 2;
-          
-          const dx = mouse.x - wordCenterX;
-          const dy = mouse.y - wordCenterY;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 300) {
-            const intensity = 1 - (distance / 300);
-            word.style.textShadow = `0 0 ${15 * intensity}px rgba(255, 255, 255, 0.8)`;
-          } else {
-            word.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.3)';
-          }
-        });
-      }
-      
-      requestAnimationFrame(animate);
-    }
-    
-    animate();
-    
-    // Add particle burst on click
-    document.addEventListener('click', (e) => {
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = ['#ff9500', '#00d0ff', '#ff3ee7', '#ffffff'][Math.floor(Math.random() * 4)];
-        particle.style.borderRadius = '50%';
-        particle.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.7)';
-        particle.style.left = `${e.clientX}px`;
-        particle.style.top = `${e.clientY}px`;
-        particle.style.zIndex = '10';
-        document.body.appendChild(particle);
-        
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 5 + 2;
-        const dx = Math.cos(angle) * speed;
-        const dy = Math.sin(angle) * speed;
-        
-        particle.animate([
-          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-          { transform: `translate(${dx * 20}px, ${dy * 20}px) scale(0)`, opacity: 0 }
-        ], {
-          duration: Math.random() * 1000 + 500,
-          easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
-        }).onfinish = () => particle.remove();
-      }
-    });
-  </script>
-</body>
+      });
+    </script>
+  </body>
 </html>
